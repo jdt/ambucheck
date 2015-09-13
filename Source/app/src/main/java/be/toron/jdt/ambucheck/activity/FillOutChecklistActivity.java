@@ -1,32 +1,26 @@
-package be.toron.jdt.ambucheck;
+package be.toron.jdt.ambucheck.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
+import be.toron.jdt.ambucheck.R;
 
 
-public class MainActivity extends Activity {
+public class FillOutChecklistActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-
-    public void fillOutChecklist(View view) {
-        Intent intent = new Intent(this, FillOutChecklistActivity.class);
-        startActivity(intent);
+        setContentView(R.layout.activity_fill_out_checklist);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_fill_out_checklist, menu);
         return true;
     }
 
