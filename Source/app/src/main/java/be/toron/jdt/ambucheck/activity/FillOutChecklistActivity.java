@@ -1,21 +1,37 @@
 package be.toron.jdt.ambucheck.activity;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+
+import javax.inject.Inject;
 
 import be.toron.jdt.ambucheck.R;
+import be.toron.jdt.ambucheck.domain.CheckList;
+import be.toron.jdt.ambucheck.domain.CheckListItem;
 
 
-public class FillOutChecklistActivity extends ActionBarActivity {
+public class FillOutChecklistActivity extends AmbuCheckActivity
+{
+    @Inject
+    CheckList _checkList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_out_checklist);
-    }
 
+        LinearLayout layout = (LinearLayout) findViewById(R.id.checkListItemLayout);
+        for(CheckListItem item : _checkList.getCheckListItems())
+        {
+            CheckBox box = new CheckBox(getBaseContext());
+            box.setText(item.getDescription());
+
+            layout.addView(box);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
