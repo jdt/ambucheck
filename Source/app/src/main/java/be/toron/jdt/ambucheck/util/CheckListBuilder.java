@@ -1,7 +1,6 @@
 package be.toron.jdt.ambucheck.util;
 
 import android.util.JsonReader;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.StringReader;
