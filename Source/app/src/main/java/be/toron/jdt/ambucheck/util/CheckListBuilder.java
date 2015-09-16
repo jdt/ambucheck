@@ -15,16 +15,13 @@ public class CheckListBuilder
     {
         CheckList result = new CheckList();
 
-        Log.d("test", "test");
         JsonReader reader = new JsonReader(new StringReader(json));
         try
         {
             reader.beginObject();
-            Log.d("test", "test");
             while (reader.hasNext())
             {
                 String name = reader.nextName();
-                Log.d("test", name);
                 if (name.equals("CheckListItems"))
                 {
                     reader.beginArray();
