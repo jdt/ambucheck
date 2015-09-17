@@ -33,6 +33,11 @@ public class FillOutChecklistActivity extends AmbuCheckActivity
         }
     }
 
+    public void setCheckList(CheckList checkList)
+    {
+        _checkList = checkList;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
