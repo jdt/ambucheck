@@ -9,6 +9,11 @@ public class CheckListItem
         _description = "";
     }
 
+    public CheckListItem(String description)
+    {
+        _description = description;
+    }
+
     public String getDescription()
     {
         return _description;
