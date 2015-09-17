@@ -3,18 +3,18 @@ package be.toron.jdt.ambucheck.test.util;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import be.toron.jdt.ambucheck.BuildConfig;
 import be.toron.jdt.ambucheck.domain.CheckList;
 import be.toron.jdt.ambucheck.domain.CheckListItem;
-import be.toron.jdt.ambucheck.test.CustomRobolectricRunner;
 import be.toron.jdt.ambucheck.util.CheckListBuilder;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@RunWith(CustomRobolectricRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class)
 public class CheckListBuilderTest
 {
