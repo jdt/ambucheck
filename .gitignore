@@ -26,6 +26,6 @@ proguard/
 # Log Files
 *.log
 
-/Source/.idea/libraries
-/Source/.idea/workspace.xml
-/Source/.DS_Store
+/Source/Android/.idea/libraries
+/Source/Android/.idea/workspace.xml
+/Source/Android/.DS_Store
