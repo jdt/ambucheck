@@ -6,4 +6,9 @@ public class AmbuCheckException extends Error
     {
         super(msg);
     }
+
+    public AmbuCheckException(Exception e)
+    {
+        super("An unexpected exception occurred", e);
+    }
 }
