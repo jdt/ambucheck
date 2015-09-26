@@ -14,8 +14,8 @@ gen/
 
 # Gradle files
 .gradle/
-build/
-/*/build/
+Source/Android/*build/
+Source/Android/*/*/build/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -29,3 +29,4 @@ proguard/
 /Source/Android/.idea/libraries
 /Source/Android/.idea/workspace.xml
 /Source/Android/.DS_Store
+/.vagrant
