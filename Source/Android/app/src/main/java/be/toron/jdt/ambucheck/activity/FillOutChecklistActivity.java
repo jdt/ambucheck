@@ -3,20 +3,25 @@ package be.toron.jdt.ambucheck.activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import javax.inject.Inject;
 
 import be.toron.jdt.ambucheck.R;
+import be.toron.jdt.ambucheck.activity.controls.CheckListItemCheckBox;
 import be.toron.jdt.ambucheck.domain.CheckList;
 import be.toron.jdt.ambucheck.domain.CheckListItem;
+import be.toron.jdt.ambucheck.util.CheckListBuilder;
 
 
 public class FillOutChecklistActivity extends AmbuCheckActivity
 {
     @Inject
     CheckList _checkList;
+    @Inject
+    CheckListBuilder _builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +31,7 @@ public class FillOutChecklistActivity extends AmbuCheckActivity
         LinearLayout layout = (LinearLayout) findViewById(R.id.checkListItemLayout);
         for(CheckListItem item : _checkList.getCheckListItems())
         {
-            CheckBox box = new CheckBox(getBaseContext());
-            box.setText(item.getDescription());
-
+            CheckListItemCheckBox box = new CheckListItemCheckBox(getBaseContext(), item);
             layout.addView(box);
         }
     }
@@ -36,6 +39,20 @@ public class FillOutChecklistActivity extends AmbuCheckActivity
     public void setCheckList(CheckList checkList)
     {
         _checkList = checkList;
+    }
+
+    public void submitCheckList(View view)
+    {
+        CheckList listToSubmit = new CheckList();
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.checkListItemLayout);
+        for(int i = 0; i < layout.getChildCount(); i++)
+        {
+            CheckListItemCheckBox box = (CheckListItemCheckBox) layout.getChildAt(i);
+            listToSubmit.addCheckListItem(box.getCheckListItem());
+        }
+
+        _builder.SerializeFrom(listToSubmit);
     }
 
     @Override

@@ -58,4 +58,10 @@ public class AmbuCheckModule
         CheckListBuilder builder = new CheckListBuilder();
         return builder.BuildFrom(writer.toString());
     }
+
+    @Provides
+    public CheckListBuilder getCheckListBuilder()
+    {
+        return new CheckListBuilder();
+    }
 }
