@@ -1,10 +1,13 @@
 package be.toron.jdt.ambucheck.util;
 
 import android.util.JsonReader;
+import android.util.JsonWriter;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 
+import be.toron.jdt.ambucheck.activity.controls.CheckListItemCheckBox;
 import be.toron.jdt.ambucheck.domain.CheckList;
 import be.toron.jdt.ambucheck.domain.CheckListItem;
 
@@ -53,6 +56,39 @@ public class CheckListBuilder
             }
         }
 
+        return result;
+    }
+
+    public String SerializeFrom(CheckList checkList)
+    {
+        StringWriter stringWriter = new StringWriter();
+        JsonWriter writer = new JsonWriter(stringWriter);
+
+        try
+        {
+            writer.beginObject();
+
+            writer.name("CheckListItems");
+            writer.beginArray();
+            for(CheckListItem item : checkList.getCheckListItems())
+            {
+                writer.beginObject();
+                writer.name("Description");
+                writer.value(item.getDescription());
+                writer.name("Checked");
+                writer.value(item.getChecked());
+                writer.endObject();
+            }
+            writer.endArray();
+
+            writer.endObject();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        String result = stringWriter.toString();
         return result;
     }
 
