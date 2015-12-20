@@ -1,6 +1,5 @@
 package be.toron.jdt.ambucheck.domain;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class CheckList
@@ -12,7 +11,7 @@ public class CheckList
     public CheckList()
     {
         _items = new DefaultCheckListItemCollection();
-        _completedOn = Calendar.getInstance().getTime();
+        _completedOn = null;
         _completedBy = "";
     }
 

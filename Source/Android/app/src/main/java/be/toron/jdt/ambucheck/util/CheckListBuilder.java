@@ -6,6 +6,7 @@ import android.util.JsonWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 
 import be.toron.jdt.ambucheck.activity.controls.CheckListItemCheckBox;
 import be.toron.jdt.ambucheck.domain.CheckList;
@@ -13,6 +14,8 @@ import be.toron.jdt.ambucheck.domain.CheckListItem;
 
 public class CheckListBuilder
 {
+    private final SimpleDateFormat JsonDateTimeFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+
     public CheckList BuildFrom(String json)
     {
         CheckList result = new CheckList();
@@ -24,19 +27,30 @@ public class CheckListBuilder
             while (reader.hasNext())
             {
                 String name = reader.nextName();
-                if (name.equals("CheckListItems"))
+                switch(name.toUpperCase())
                 {
-                    reader.beginArray();
-                    while (reader.hasNext())
-                    {
-                        result.addCheckListItem(readCheckListItem(reader));
-                    }
-                    reader.endArray();
+                    case "CHECKLISTITEMS":
+                        reader.beginArray();
+                        while (reader.hasNext())
+                        {
+                            result.addCheckListItem(readCheckListItem(reader));
+                        }
+                        reader.endArray();
+                        break;
+                    case "COMPLETEDBY":
+                        result.setCompletedBy(reader.nextString());
+                        break;
+                    case "COMPLETEDON":
+                        String dateString = reader.nextString();
+                        if(dateString != "")
+                        {
+                            result.setCompletedOn(JsonDateTimeFormat.parse(dateString));
+                        }
+                        break;
+                    default:
+                        reader.skipValue();
                 }
-                else
-                {
-                    reader.skipValue();
-                }
+
             }
             reader.endObject();
         }
@@ -80,6 +94,12 @@ public class CheckListBuilder
                 writer.endObject();
             }
             writer.endArray();
+
+            writer.name("CompletedBy");
+            writer.value(checkList.getCompletedBy());
+
+            writer.name("CompletedOn");
+            writer.value(JsonDateTimeFormat.format(checkList.getCompletedOn()));
 
             writer.endObject();
         }
