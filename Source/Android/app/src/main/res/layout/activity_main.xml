@@ -33,7 +33,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="106dp"
-            android:id="@+id/listViewUnsubmitted"
+            android:id="@+id/listViewCompleted"
             android:layout_weight="0.50"/>
 
         <Button
