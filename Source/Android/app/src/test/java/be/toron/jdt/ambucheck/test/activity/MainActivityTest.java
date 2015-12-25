@@ -23,6 +23,7 @@ import be.toron.jdt.ambucheck.activity.FillOutChecklistActivity;
 import be.toron.jdt.ambucheck.activity.MainActivity;
 import be.toron.jdt.ambucheck.db.Database;
 import be.toron.jdt.ambucheck.domain.CheckList;
+import be.toron.jdt.ambucheck.test.testutils.MyTestableDb;
 import be.toron.jdt.ambucheck.view.CheckListAdapter;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -72,27 +73,5 @@ public class MainActivityTest
         CheckListAdapter adapter = (CheckListAdapter) listView.getAdapter();
 
         assertThat(adapter.getCheckLists(), equalTo(checkLists));
-    }
-
-    public class MyTestableDb implements Database
-    {
-        private List<CheckList> _checkLists;
-
-        @Override
-        public void Save(CheckList checkList)
-        {
-
-        }
-
-        @Override
-        public List<CheckList> SelectCheckLists()
-        {
-            return _checkLists;
-        }
-
-        public void setCheckLists(List<CheckList> checkLists)
-        {
-            _checkLists = checkLists;
-        }
     }
 }

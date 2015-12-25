@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Calendar;
 
 import be.toron.jdt.ambucheck.activity.FillOutChecklistActivity;
 import be.toron.jdt.ambucheck.activity.MainActivity;
@@ -69,5 +70,11 @@ public class AmbuCheckModule
     public Database getDatabase()
     {
         return new DefaultDatabase(new CheckListBuilder(), _applicationContext);
+    }
+
+    @Provides
+    public Calendar getCalendar()
+    {
+        return Calendar.getInstance();
     }
 }

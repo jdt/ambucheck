@@ -1,23 +1,37 @@
 package be.toron.jdt.ambucheck.test.activity;
 
+import android.database.CursorWindow;
+import android.os.SystemClock;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
+import org.robolectric.internal.Shadow;
+import org.robolectric.shadows.ShadowSystemClock;
+import org.robolectric.shadows.ShadowTime;
 import org.robolectric.util.ActivityController;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import be.toron.jdt.ambucheck.BuildConfig;
 import be.toron.jdt.ambucheck.R;
 import be.toron.jdt.ambucheck.activity.FillOutChecklistActivity;
 import be.toron.jdt.ambucheck.domain.CheckList;
 import be.toron.jdt.ambucheck.domain.CheckListItem;
+import be.toron.jdt.ambucheck.test.testutils.MyTestableDb;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class)
@@ -44,5 +58,46 @@ public class FillOutCheckListActivityTest
 
         assertEquals("Foo", child1.getText());
         assertEquals("Bar", child2.getText());
+    }
+
+    @Test
+    public void SubmitCheckListShoudSaveCheckListToDatabase()
+    {
+        ActivityController<FillOutChecklistActivity> controller = Robolectric.buildActivity(FillOutChecklistActivity.class);
+        FillOutChecklistActivity activity = controller.get();
+
+        CheckList checkList = new CheckList();
+        checkList.addCheckListItem(new CheckListItem("Foo"));
+        checkList.addCheckListItem(new CheckListItem("Bar"));
+
+        MyTestableDb db = new MyTestableDb();
+
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.set(2015, 11, 25, 18, 10, 0);
+
+        activity.setCheckList(checkList);
+        activity.setDatabase(db);
+        activity.setCalendar(calendar);
+
+        controller.create();
+
+        LinearLayout layout = (LinearLayout) activity.findViewById(R.id.checkListItemLayout);
+        CheckBox foo = (CheckBox)layout.getChildAt(0);
+        foo.setChecked(true);
+
+        TextView completedByName = (TextView) activity.findViewById(R.id.completedBy);
+        completedByName.setText("Bunny");
+
+        Button completeButton = (Button) activity.findViewById(R.id.buttonSubmit);
+        completeButton.performClick();
+
+        CheckList savedCheckList = db.GetLastSavedCheckList();
+        assertThat(savedCheckList.getCompletedBy(), equalTo("Bunny"));
+        assertThat(savedCheckList.getCompletedOn(), equalTo(calendar.getTime()));
+        assertThat(savedCheckList.getCheckListItems().size(), equalTo(2));
+        assertThat(savedCheckList.getCheckListItems().get(0).getDescription(), equalTo("Foo"));
+        assertThat(savedCheckList.getCheckListItems().get(0).getChecked(), equalTo(true));
+        assertThat(savedCheckList.getCheckListItems().get(1).getDescription(), equalTo("Bar"));
+        assertThat(savedCheckList.getCheckListItems().get(1).getChecked(), equalTo(false));
     }
 }

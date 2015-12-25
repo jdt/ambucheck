@@ -4,16 +4,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.Calendar;
 
 import javax.inject.Inject;
 
 import be.toron.jdt.ambucheck.R;
 import be.toron.jdt.ambucheck.activity.controls.CheckListItemCheckBox;
+import be.toron.jdt.ambucheck.db.Database;
 import be.toron.jdt.ambucheck.domain.CheckList;
 import be.toron.jdt.ambucheck.domain.CheckListItem;
-import be.toron.jdt.ambucheck.util.CheckListBuilder;
 
 
 public class FillOutChecklistActivity extends AmbuCheckActivity
@@ -21,7 +23,9 @@ public class FillOutChecklistActivity extends AmbuCheckActivity
     @Inject
     CheckList _checkList;
     @Inject
-    CheckListBuilder _builder;
+    Database _db;
+    @Inject
+    Calendar _calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,16 @@ public class FillOutChecklistActivity extends AmbuCheckActivity
         _checkList = checkList;
     }
 
+    public void setDatabase(Database database)
+    {
+        _db = database;
+    }
+
+    public void setCalendar(Calendar calendar)
+    {
+        _calendar = calendar;
+    }
+
     public void submitCheckList(View view)
     {
         CheckList listToSubmit = new CheckList();
@@ -52,7 +66,11 @@ public class FillOutChecklistActivity extends AmbuCheckActivity
             listToSubmit.addCheckListItem(box.getCheckListItem());
         }
 
-        _builder.SerializeFrom(listToSubmit);
+        TextView textPersonName = (TextView)findViewById(R.id.completedBy);
+        listToSubmit.setCompletedBy(textPersonName.getText().toString());
+        listToSubmit.setCompletedOn(_calendar.getTime());
+
+        _db.Save(listToSubmit);
     }
 
     @Override
