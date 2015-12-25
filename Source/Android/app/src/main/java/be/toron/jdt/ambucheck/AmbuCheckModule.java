@@ -32,41 +32,6 @@ public class AmbuCheckModule
     }
 
     @Provides
-    public CheckList provideCheckList()
-    {
-        InputStream resourceReader = _resource.openRawResource(R.raw.checklist);
-        Writer writer = new StringWriter();
-        try
-        {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(resourceReader, "UTF-8"));
-            String line = reader.readLine();
-            while (line != null)
-            {
-                writer.write(line);
-                line = reader.readLine();
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                resourceReader.close();
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        CheckListBuilder builder = new CheckListBuilder();
-        return builder.BuildFrom(writer.toString());
-    }
-
-    @Provides
     public Database getDatabase()
     {
         return new DefaultDatabase(new CheckListBuilder(), _applicationContext);

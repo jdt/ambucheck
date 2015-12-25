@@ -22,8 +22,6 @@ import be.toron.jdt.ambucheck.domain.CheckListItem;
 public class FillOutChecklistActivity extends AmbuCheckActivity
 {
     @Inject
-    CheckList _checkList;
-    @Inject
     Database _db;
     @Inject
     Calendar _calendar;
@@ -34,16 +32,11 @@ public class FillOutChecklistActivity extends AmbuCheckActivity
         setContentView(R.layout.activity_fill_out_checklist);
 
         LinearLayout layout = (LinearLayout) findViewById(R.id.checkListItemLayout);
-        for(CheckListItem item : _checkList.getCheckListItems())
+        for(CheckListItem item : _db.GetTemplate().getCheckListItems())
         {
             CheckListItemCheckBox box = new CheckListItemCheckBox(getBaseContext(), item);
             layout.addView(box);
         }
-    }
-
-    public void setCheckList(CheckList checkList)
-    {
-        _checkList = checkList;
     }
 
     public void setDatabase(Database database)

@@ -34,8 +34,9 @@ import static org.robolectric.Shadows.shadowOf;
 public class FillOutCheckListActivityTest
 {
     @Test
-    public void create_ShouldRenderItemsFromCheckList()
+    public void CreateShouldRenderItemsFromCheckListTemplate()
     {
+        //arrange
         ActivityController<FillOutChecklistActivity> controller = Robolectric.buildActivity(FillOutChecklistActivity.class);
         FillOutChecklistActivity activity = controller.get();
 
@@ -43,10 +44,15 @@ public class FillOutCheckListActivityTest
         checkList.addCheckListItem(new CheckListItem("Foo"));
         checkList.addCheckListItem(new CheckListItem("Bar"));
 
-        activity.setCheckList(checkList);
+        MyTestableDb db = new MyTestableDb();
+        db.UpdateTemplate(checkList);
 
+        activity.setDatabase(db);
+
+        //act
         controller.create();
 
+        //assert
         LinearLayout layout = (LinearLayout) activity.findViewById(R.id.checkListItemLayout);
 
         CheckBox child1 = (CheckBox)layout.getChildAt(0);
@@ -68,11 +74,11 @@ public class FillOutCheckListActivityTest
         checkList.addCheckListItem(new CheckListItem("Bar"));
 
         MyTestableDb db = new MyTestableDb();
+        db.UpdateTemplate(checkList);
 
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.set(2015, 11, 25, 18, 10, 0);
 
-        activity.setCheckList(checkList);
         activity.setDatabase(db);
         activity.setCalendar(calendar);
 

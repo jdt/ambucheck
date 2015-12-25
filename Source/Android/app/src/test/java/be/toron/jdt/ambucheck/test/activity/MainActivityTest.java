@@ -38,13 +38,19 @@ public class MainActivityTest
     @Test
     public void FillOutCheckListButtonClickShouldLaunchFillOutCheckListActivity()
     {
+        //arrange
         ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
-        controller.create();
-
         MainActivity activity = controller.get();
 
+        MyTestableDb db = new MyTestableDb();
+        activity.setDatabase(db);
+
+        controller.create();
+
+        //act
         activity.findViewById(R.id.buttonFillOut).performClick();
 
+        //assert
         Intent expectedIntent = new Intent(activity, FillOutChecklistActivity.class);
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
     }
