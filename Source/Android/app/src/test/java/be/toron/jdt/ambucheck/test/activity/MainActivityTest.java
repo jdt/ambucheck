@@ -23,6 +23,7 @@ import be.toron.jdt.ambucheck.activity.FillOutChecklistActivity;
 import be.toron.jdt.ambucheck.activity.MainActivity;
 import be.toron.jdt.ambucheck.db.Database;
 import be.toron.jdt.ambucheck.domain.CheckList;
+import be.toron.jdt.ambucheck.services.UpdateCheckListService;
 import be.toron.jdt.ambucheck.test.testutils.MyTestableDb;
 import be.toron.jdt.ambucheck.view.CheckListAdapter;
 
@@ -49,8 +50,9 @@ public class MainActivityTest
     }
 
     @Test
-    public void CreatingMainActivityShouldDisplayCheckListsInDatabase()
+    public void CreatingMainActivityShouldDisplayCheckListsInDatabaseAndCheckForUpdatedCheckList()
     {
+        //arrange
         CheckList list1 = new CheckList();
         list1.setCompletedOn(new GregorianCalendar(2015, 11, 18, 13, 35, 53).getTime());
 
@@ -66,12 +68,17 @@ public class MainActivityTest
 
         ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
         MainActivity activity = controller.get();
-        activity._db = db;
+        activity.setDatabase(db);
 
+        //act
         controller.create();
+
+        //assert
         ListView listView = (ListView) activity.findViewById(R.id.listViewCompleted);
         CheckListAdapter adapter = (CheckListAdapter) listView.getAdapter();
-
         assertThat(adapter.getCheckLists(), equalTo(checkLists));
+
+        Intent expectedIntent = new Intent(activity, UpdateCheckListService.class);
+        assertThat(shadowOf(activity).getNextStartedService(), equalTo(expectedIntent));
     }
 }

@@ -2,12 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="be.toron.jdt.ambucheck" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".AmbuCheckApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
@@ -29,6 +32,8 @@
             android:name=".activity.AboutActivity"
             android:label="@string/title_activity_about" >
         </activity>
+
+        <service android:name=".services.UpdateCheckListService"></service>
     </application>
 
 </manifest>

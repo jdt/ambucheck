@@ -12,13 +12,14 @@ import javax.inject.Inject;
 
 import be.toron.jdt.ambucheck.R;
 import be.toron.jdt.ambucheck.db.Database;
+import be.toron.jdt.ambucheck.services.UpdateCheckListService;
 import be.toron.jdt.ambucheck.view.CheckListAdapter;
 
 
 public class MainActivity extends AmbuCheckActivity {
 
     @Inject
-    public Database _db;
+    Database _db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,9 @@ public class MainActivity extends AmbuCheckActivity {
 
         ListView listView = (ListView)findViewById(R.id.listViewCompleted);
         listView.setAdapter(new CheckListAdapter(this, _db.SelectCheckLists()));
+
+        Intent intent = new Intent(this, UpdateCheckListService.class);
+        startService(intent);
     }
 
     public void fillOutChecklist(View view) {
@@ -34,6 +38,10 @@ public class MainActivity extends AmbuCheckActivity {
         startActivity(intent);
     }
 
+    public void setDatabase(Database db)
+    {
+        _db = db;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
