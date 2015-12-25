@@ -1,13 +1,12 @@
 package be.toron.jdt.ambucheck.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import be.toron.jdt.ambucheck.R;
 
-public class AboutActivity extends AppCompatActivity
+public class AboutActivity extends AmbuCheckActivity
 {
 
     @Override
