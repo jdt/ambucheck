@@ -119,10 +119,14 @@ public class CheckListBuilder
         reader.beginObject();
         while (reader.hasNext())
         {
-            String name = reader.nextName();
-            if(name.equals("Description"))
+            String name = reader.nextName().toUpperCase();
+            if(name.equals("DESCRIPTION"))
             {
                 result.setDescription(reader.nextString());
+            }
+            else if(name.equals("CHECKED"))
+            {
+                result.setChecked(reader.nextBoolean());
             }
             else
             {
