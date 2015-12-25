@@ -1,5 +1,6 @@
 package be.toron.jdt.ambucheck.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -71,6 +72,9 @@ public class FillOutChecklistActivity extends AmbuCheckActivity
         listToSubmit.setCompletedOn(_calendar.getTime());
 
         _db.Save(listToSubmit);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
