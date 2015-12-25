@@ -8,4 +8,7 @@ public interface Database
 {
     void Save(CheckList checkList);
     List<CheckList> SelectCheckLists();
+
+    void UpdateTemplate(CheckList template);
+    CheckList GetTemplate();
 }
