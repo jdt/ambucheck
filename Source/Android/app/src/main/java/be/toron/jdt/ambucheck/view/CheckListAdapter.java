@@ -61,4 +61,9 @@ public class CheckListAdapter extends BaseAdapter
         });
         return rowView;
     }
+
+    public List<CheckList> getCheckLists()
+    {
+        return _checkLists;
+    }
 }

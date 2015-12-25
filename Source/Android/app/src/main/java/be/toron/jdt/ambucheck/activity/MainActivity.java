@@ -6,16 +6,27 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+
+import javax.inject.Inject;
 
 import be.toron.jdt.ambucheck.R;
+import be.toron.jdt.ambucheck.db.Database;
+import be.toron.jdt.ambucheck.view.CheckListAdapter;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends AmbuCheckActivity {
+
+    @Inject
+    public Database _db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ListView listView = (ListView)findViewById(R.id.listViewCompleted);
+        listView.setAdapter(new CheckListAdapter(this, _db.SelectCheckLists()));
     }
 
     public void fillOutChecklist(View view) {

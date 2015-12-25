@@ -22,7 +22,7 @@ public class AmbuCheckApplication extends Application
     {
         List<Object> result = new ArrayList<>();
 
-        result.add(new AmbuCheckModule(getResources()));
+        result.add(new AmbuCheckModule(getResources(), getApplicationContext()));
 
         return result;
     }
