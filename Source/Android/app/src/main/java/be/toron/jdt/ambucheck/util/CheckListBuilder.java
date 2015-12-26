@@ -95,11 +95,17 @@ public class CheckListBuilder
             }
             writer.endArray();
 
-            writer.name("CompletedBy");
-            writer.value(checkList.getCompletedBy());
+            if(checkList.getCompletedBy() != null)
+            {
+                writer.name("CompletedBy");
+                writer.value(checkList.getCompletedBy());
+            }
 
-            writer.name("CompletedOn");
-            writer.value(JsonDateTimeFormat.format(checkList.getCompletedOn()));
+            if(checkList.getCompletedOn() != null)
+            {
+                writer.name("CompletedOn");
+                writer.value(JsonDateTimeFormat.format(checkList.getCompletedOn()));
+            }
 
             writer.endObject();
         }

@@ -91,4 +91,21 @@ public class CheckListBuilderTest
 
         assertThat(result, is("{\"CheckListItems\":[{\"Description\":\"Item 1\",\"Checked\":true},{\"Description\":\"Item 2\",\"Checked\":false}],\"CompletedBy\":\"foo\",\"CompletedOn\":\"20151220150235\"}"));
     }
+
+    @Test
+    public void TestSerializeFromShouldNotSetCompletedOnAndCompletedByIfNotSet()
+    {
+        CheckList checkList = new CheckList();
+        checkList.setCompletedOn(null);
+        checkList.setCompletedBy(null);
+
+        CheckListItem item = new CheckListItem("Item 1");
+        item.setChecked(true);
+
+        checkList.addCheckListItem(item);
+
+        String result = _builder.SerializeFrom(checkList);
+
+        assertThat(result, is("{\"CheckListItems\":[{\"Description\":\"Item 1\",\"Checked\":true}]}"));
+    }
 }
