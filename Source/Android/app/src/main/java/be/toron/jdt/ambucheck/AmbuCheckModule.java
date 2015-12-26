@@ -15,11 +15,12 @@ import be.toron.jdt.ambucheck.activity.MainActivity;
 import be.toron.jdt.ambucheck.db.Database;
 import be.toron.jdt.ambucheck.db.DefaultDatabase;
 import be.toron.jdt.ambucheck.domain.CheckList;
+import be.toron.jdt.ambucheck.services.UpdateCheckListService;
 import be.toron.jdt.ambucheck.util.CheckListBuilder;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(injects = {MainActivity.class, FillOutChecklistActivity.class}, library = true)
+@Module(injects = {MainActivity.class, FillOutChecklistActivity.class, UpdateCheckListService.class}, library = true)
 public class AmbuCheckModule
 {
     private Resources _resource;
@@ -41,5 +42,11 @@ public class AmbuCheckModule
     public Calendar getCalendar()
     {
         return Calendar.getInstance();
+    }
+
+    @Provides
+    public CheckListBuilder getBuilder()
+    {
+        return new CheckListBuilder();
     }
 }
