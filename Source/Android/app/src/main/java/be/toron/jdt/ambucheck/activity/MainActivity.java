@@ -1,6 +1,7 @@
 package be.toron.jdt.ambucheck.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,10 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import be.toron.jdt.ambucheck.R;
 import be.toron.jdt.ambucheck.db.Database;
+import be.toron.jdt.ambucheck.domain.CheckList;
 import be.toron.jdt.ambucheck.services.UpdateCheckListService;
 import be.toron.jdt.ambucheck.view.CheckListAdapter;
 
@@ -36,6 +40,11 @@ public class MainActivity extends AmbuCheckActivity {
     public void fillOutChecklist(View view) {
         Intent intent = new Intent(this, FillOutChecklistActivity.class);
         startActivity(intent);
+    }
+
+    public void submitCompletedChecklists(View view)
+    {
+
     }
 
     public void setDatabase(Database db)
