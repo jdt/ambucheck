@@ -44,7 +44,23 @@ public class MainActivity extends AmbuCheckActivity {
 
     public void submitCompletedChecklists(View view)
     {
+        final ProgressDialog progressDialog = ProgressDialog.show(MainActivity.this, getString(R.string.pleaseWait), getString(R.string.submittingCompletedChecklists));
 
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                List<CheckList> toSubmit = _db.SelectCheckLists();
+
+                for(CheckList checkList : toSubmit)
+                {
+
+                }
+
+                progressDialog.dismiss();
+            }
+        }).start();
     }
 
     public void setDatabase(Database db)
