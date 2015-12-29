@@ -9,4 +9,6 @@
     <string name="submit">Submit</string>
     <string name="unSubmittedCheckLists">Checklists to submit</string>
     <string name="submitNow">Submit Now</string>
+    <string name="pleaseWait">Please wait...</string>
+    <string name="submittingCompletedChecklists">Submitting completed checklists</string>
 </resources>
